@@ -1,0 +1,4 @@
+/* Need this to center the stars on shopinfo page */
+ul {
+  justify-content: center !important;
+}

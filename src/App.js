@@ -11,6 +11,7 @@ import Error from './pages/Error';
 
 import NavBar from './components/NavBar';
 import Footer from './components/Footer';
+import ShopInfo from './pages/ShopInfo';
 
 function App() {
   return (
@@ -30,6 +31,12 @@ function App() {
           <Route path="/contact">
             <Contact />
           </Route>
+
+          {/* Make sure to remove this after testing */}
+          <Route path="/shopinfo">
+            <ShopInfo />
+          </Route>
+
           <Route path="/404">
             <Error />
           </Route>
