@@ -1,0 +1,16 @@
+body {
+  font-family: "Roboto", sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: blanchedalmond;
+}
+
+.page-container {
+  position: relative;
+  min-height: 100vh;
+}
+
+.content-wrap {
+  /* padding-top: 3.5rem; */
+  padding-bottom: 3.5rem;
+}
