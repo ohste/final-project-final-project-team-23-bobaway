@@ -31,6 +31,9 @@ function App() {
           <Route path="/contact">
             <Contact />
           </Route>
+          <Route path="/shops/:id">
+            <ShopInfo/>
+          </Route>
 
           {/* Make sure to remove this after testing */}
           <Route path="/shopinfo">
