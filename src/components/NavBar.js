@@ -1,12 +1,11 @@
 import React from 'react';
 import { Navbar, Nav } from 'react-bootstrap';
 
-
 function NavBar() {
   return (
     <>
       <Navbar className="mb-3" collapseOnSelect expand="lg" bg="dark" variant="dark">
-        <Navbar.Brand href="/">BobaWay</Navbar.Brand>
+        <Navbar.Brand href="/"><span style={{color: "blanchedalmond", fontFamily: "Pacifico"}}>BobaWay</span></Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav>

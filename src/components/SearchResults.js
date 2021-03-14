@@ -9,7 +9,7 @@ function SearchResults() {
   return(
     <CardDeck style={{margin:"0"}}>
       {result.map((item) => (
-        <SearchResultItem/>
+        <SearchResultItem key={item}/>
       ))}
     </CardDeck>
   );

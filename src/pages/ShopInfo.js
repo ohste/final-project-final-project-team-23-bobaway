@@ -50,6 +50,7 @@ function ShopInfo() {
               <Card.Text>Address: </Card.Text>
               <Card.Text>Hour: </Card.Text>
               <Card.Text>Description: </Card.Text>
+              <Button>Add Rating</Button>
             </Card.Body>
           </Card>
         </Col>

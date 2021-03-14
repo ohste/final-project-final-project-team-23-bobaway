@@ -71,16 +71,27 @@ function Search() {
         <Row className="text-center">
           <Col md={2}></Col>
           <Col md={8} className="my-auto">
-            <InputGroup className="mb-3">
-              <FormControl
-                placeholder="City, State, Country"
-                aria-label="Default"
-                aria-describedby="inputGroup-sizing-default"
-              />
-              <InputGroup.Append>
-                <Button variant="primary">Search</Button>
-              </InputGroup.Append>
-            </InputGroup>
+            <Form
+              onSubmit={(e) => {
+                e.preventDefault();
+                console.log(input)
+              }}
+            >
+              <InputGroup className="mb-3">
+                <FormControl
+                  placeholder="City, State, Country"
+                  aria-label="Default"
+                  aria-describedby="inputGroup-sizing-default"
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                />
+                <InputGroup.Append>
+                  <Button variant="primary" type="submit">
+                    Search
+                  </Button>
+                </InputGroup.Append>
+              </InputGroup>
+            </Form>
           </Col>
           <Col md={2}></Col>
         </Row>

@@ -15,9 +15,9 @@ import ShopInfo from './pages/ShopInfo';
 
 function App() {
   return (
-    <div class="page-container">
+    <div className="page-container">
       <NavBar />
-      <div class="content-wrap">
+      <div className="content-wrap">
         <Switch>
           <Route exact path="/">
             <Home/>
