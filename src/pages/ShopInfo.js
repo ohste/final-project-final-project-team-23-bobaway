@@ -2,13 +2,22 @@ import React, { useState, useEffect } from 'react';
 import { Button, Card, Col, Container, Row } from 'react-bootstrap';
 import {useRouteMatch, useParams} from 'react-router-dom';
 import BeautyStars from 'beauty-stars';
+import {useSelector, useDispatch} from 'react-redux'
 
+import {addRating} from '../redux/actions';
+import {getRatings} from '../redux/selectors';
+import Rating from '../components/Rating';
 import RateBox from '../components/RateBox';
-
 import "./ShopInfo.css";
+
 const APIkey = 'RX0RyDW9JYbHkUrMKp3REkF51-YsQbZbSagBgXZ4HgpZn2WMPBwXat-LzkxiRHZkCEKbue5Yd2qarbhpxm_Ib3DOpF9dIIaLwc5-I2YQs8V4de5ATm8YJbJaQwtsXnYx'
 
 // https://reactjsexample.com/a-simple-and-beauty-star-rating-for-react/
+
+/*
+This function will used to be fetch a query from the Yelp businesses API
+Given a business ID as [query], return the info associated with that business
+*/
 function useSearch(query){
   const [repos, setRepos] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -60,29 +69,32 @@ function useSearch(query){
   return [repos,isLoading,isError, isDone];
 }
 
+
 function ShopInfo() {
-  const [stars, setStars] = useState(0);
+  const [stars, setStars] = useState(1);
   const [showRateBox, setShowRateBox] = useState(false);
   const [raterName, setRaterName] = useState("");
   const [raterText, setRaterText] = useState("");
-  const [raterStarValue, setRaterStarValue] = useState(0);
-  
-  // need this for hardcoding
-  // useEffect(() => {
-  //   setStars(2);
-  // })
-
+  const [raterStarValue, setRaterStarValue] = useState(1);
+  const dispatch = useDispatch();
+  const ratings = useSelector(getRatings);
   const handleClose = () => setShowRateBox(false);
   const handleShow = () => setShowRateBox(true);
 
+  //Opens and closes the 'Add Rating' box
   const handleAddRatingBtn = () => {
     console.log("added:", showRateBox);
     setShowRateBox(!showRateBox);
   }
 
+  //on submit, add the rating to our store and close the rating box
   const handleSubmitRatingBtn = () => {
     console.log(raterName, raterText, raterStarValue);
     console.log("submit button clicked");
+    const addRatingAction = addRating(shopId, raterName, raterText, raterStarValue);
+    dispatch(addRatingAction);
+    setShowRateBox(!showRateBox);
+    alert("New Rating Added");
   }
 
   const {url, path} = useRouteMatch();
@@ -99,7 +111,6 @@ function ShopInfo() {
     if (isQuerySafe){
       setStars(data.rating);
     }
-    //setStars(2);
   })
   if (isQuerySafe){
     return (
@@ -128,26 +139,6 @@ function ShopInfo() {
           </Col>
           <Col md={2}></Col>
         </Row>
-        <Row>
-          <Col md={2}></Col>
-          <Col md={8} className="mb-3">
-            <Card>
-              <Card.Header>Reviews</Card.Header>
-              <Card.Body>
-                <Card.Text>Address: </Card.Text>
-                <Card.Text>Hour: </Card.Text>
-                <Card.Text>Description: </Card.Text>
-                <Button>Add Rating</Button>
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col md={2}></Col>
-        </Row>
-       <Row>
-        <Col md={12} className="text-center mb-3">
-          <BeautyStars value={stars} />
-        </Col>
-      </Row>
 
       <Row>
         <Col md={2}></Col>
@@ -168,8 +159,8 @@ function ShopInfo() {
       <Row>
         <Col md={2}></Col>
         <Col md={8} className="mb-3">
-          {showRateBox && <RateBox 
-                            submitHandle={handleSubmitRatingBtn} 
+          {showRateBox && <RateBox
+                            submitHandle={handleSubmitRatingBtn}
                             setName={setRaterName}
                             setText={setRaterText}
                             setStarValue={setRaterStarValue}
@@ -177,19 +168,7 @@ function ShopInfo() {
         </Col>
         <Col md={2}></Col>
       </Row>
-
-      <Row>
-        <Col md={2}></Col>
-        <Col md={8} className="mb-3">
-          <Card>
-            <Card.Body>
-              <Card.Text>Address: </Card.Text>
-              <Card.Text>Hour: </Card.Text>
-              <Card.Text>Description: </Card.Text>
-            </Card.Body>
-          </Card>
-      </Col>
-      </Row>
+      {ratings.map(rating => rating.id === shopId ? (<Rating {...rating}/>) : (<></>))}
       </Container>
     );
   }
