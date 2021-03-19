@@ -57,12 +57,14 @@ function useSearch(query){
 
 function Search() {
   const [input, setInput] = useState("");
-  const [data, isLoading, isError, isDone] = useSearch('Corvallis');
+  const [data, isLoading, isError, isDone] = useSearch("");
   const isQuerySafe = (!isLoading && !isError && isDone);
   console.log("data is ==", data);
   console.log("isLoading ==", isLoading);
   console.log("isError ==", isError);
   console.log("isDone ==", isDone);
+
+
   return (
     <div>
       <Container>
@@ -99,7 +101,10 @@ function Search() {
           <Col md={2}></Col>
         </Row>
         <Row>
-          <Col md={12}>{isDone ? <SearchResults data={data}/> : <h1>Loading...</h1>}</Col>
+          <Col md={12}>
+            {/* {isLoading ? <h1>Find boba near your city!</h1> : <h1></h1>} */}
+            {isDone ? <SearchResults data={data} /> : <h1></h1>}
+          </Col>
         </Row>
       </Container>
     </div>
