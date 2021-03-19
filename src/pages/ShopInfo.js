@@ -3,6 +3,8 @@ import { Button, Card, Col, Container, Row } from 'react-bootstrap';
 import {useRouteMatch, useParams} from 'react-router-dom';
 import BeautyStars from 'beauty-stars';
 
+import RateBox from '../components/RateBox';
+
 import "./ShopInfo.css";
 const APIkey = 'RX0RyDW9JYbHkUrMKp3REkF51-YsQbZbSagBgXZ4HgpZn2WMPBwXat-LzkxiRHZkCEKbue5Yd2qarbhpxm_Ib3DOpF9dIIaLwc5-I2YQs8V4de5ATm8YJbJaQwtsXnYx'
 
@@ -60,6 +62,29 @@ function useSearch(query){
 
 function ShopInfo() {
   const [stars, setStars] = useState(0);
+  const [showRateBox, setShowRateBox] = useState(false);
+  const [raterName, setRaterName] = useState("");
+  const [raterText, setRaterText] = useState("");
+  const [raterStarValue, setRaterStarValue] = useState(0);
+  
+  // need this for hardcoding
+  // useEffect(() => {
+  //   setStars(2);
+  // })
+
+  const handleClose = () => setShowRateBox(false);
+  const handleShow = () => setShowRateBox(true);
+
+  const handleAddRatingBtn = () => {
+    console.log("added:", showRateBox);
+    setShowRateBox(!showRateBox);
+  }
+
+  const handleSubmitRatingBtn = () => {
+    console.log(raterName, raterText, raterStarValue);
+    console.log("submit button clicked");
+  }
+
   const {url, path} = useRouteMatch();
   const shopId = useParams().id;
   console.log("url == ", url, "path ==", path, "params ==", shopId);
@@ -118,6 +143,53 @@ function ShopInfo() {
           </Col>
           <Col md={2}></Col>
         </Row>
+       <Row>
+        <Col md={12} className="text-center mb-3">
+          <BeautyStars value={stars} />
+        </Col>
+      </Row>
+
+      <Row>
+        <Col md={2}></Col>
+        <Col md={8} className="mb-3">
+          <Card>
+            <Card.Header>Shop Information</Card.Header>
+            <Card.Body>
+              <Card.Text>Address: </Card.Text>
+              <Card.Text>Hour: </Card.Text>
+              <Card.Text>Description: </Card.Text>
+              <Button onClick={handleAddRatingBtn}>Add Rating</Button>
+            </Card.Body>
+          </Card>
+        </Col>
+        <Col md={2}></Col>
+      </Row>
+
+      <Row>
+        <Col md={2}></Col>
+        <Col md={8} className="mb-3">
+          {showRateBox && <RateBox 
+                            submitHandle={handleSubmitRatingBtn} 
+                            setName={setRaterName}
+                            setText={setRaterText}
+                            setStarValue={setRaterStarValue}
+                          />}
+        </Col>
+        <Col md={2}></Col>
+      </Row>
+
+      <Row>
+        <Col md={2}></Col>
+        <Col md={8} className="mb-3">
+          <Card>
+            <Card.Body>
+              <Card.Text>Address: </Card.Text>
+              <Card.Text>Hour: </Card.Text>
+              <Card.Text>Description: </Card.Text>
+            </Card.Body>
+          </Card>
+      </Col>
+      </Row>
       </Container>
     );
   }

@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { CardDeck } from 'react-bootstrap';
 
 import SearchResultItem from './SearchResultItem';
@@ -13,14 +12,8 @@ function SearchResults(props) {
 
   return (
     <CardDeck style={{ margin: "0" }}>
-      {/* {result.map((item) => (
-        console.log(item)
-      ))} */}
-
       {results.map((item) => (
-        <Link to={`/shops/${item.id}`}>
           <SearchResultItem key={item.id} shopInfo={item} />
-        </Link>
       ))}
     </CardDeck>
   );
