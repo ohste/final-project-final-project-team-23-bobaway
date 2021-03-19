@@ -134,27 +134,12 @@ function ShopInfo() {
                 <Card.Text>{data.location.display_address[0]} </Card.Text>
                 <Card.Text>{data.location.display_address[1]}</Card.Text>
                 <Card.Text>Phone: {data.display_phone}</Card.Text>
+                <Button onClick={handleAddRatingBtn}>Add Rating</Button>
               </Card.Body>
             </Card>
           </Col>
           <Col md={2}></Col>
         </Row>
-
-      <Row>
-        <Col md={2}></Col>
-        <Col md={8} className="mb-3">
-          <Card>
-            <Card.Header>Shop Information</Card.Header>
-            <Card.Body>
-              <Card.Text>Address: </Card.Text>
-              <Card.Text>Hour: </Card.Text>
-              <Card.Text>Description: </Card.Text>
-              <Button onClick={handleAddRatingBtn}>Add Rating</Button>
-            </Card.Body>
-          </Card>
-        </Col>
-        <Col md={2}></Col>
-      </Row>
 
       <Row>
         <Col md={2}></Col>
