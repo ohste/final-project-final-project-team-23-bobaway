@@ -11,6 +11,14 @@ function SearchResults(props) {
   const results = props.data.businesses;
   console.log("data ", results);
 
+  const run = () => {
+    if(!props.error){
+        results.map((item) => (
+          <SearchResultItem key={item.id} shopInfo={item} />
+        ));
+    }
+  }
+
   return (
     <CardDeck style={{ margin: "0" }}>
       {/* {result.map((item) => (
@@ -18,9 +26,7 @@ function SearchResults(props) {
       ))} */}
 
       {results.map((item) => (
-        <Link to={`/shops/${item.id}`}>
-          <SearchResultItem key={item.id} shopInfo={item} />
-        </Link>
+        <SearchResultItem key={item.id} shopInfo={item} />
       ))}
     </CardDeck>
   );

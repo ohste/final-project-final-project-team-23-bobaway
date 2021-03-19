@@ -1,10 +1,12 @@
 import React, {useState, useEffect} from 'react';
-import { Button, Container, Row, Col, InputGroup, Form, FormControl } from 'react-bootstrap';
+import { Alert, Button, Container, Row, Col, InputGroup, Form, FormControl } from 'react-bootstrap';
 import {useLocation, useHistory} from 'react-router-dom';
 import queryString from 'query-string';
 import SearchResults from '../components/SearchResults';
 import fetch from 'isomorphic-unfetch';
+import Spinner from "../components/Spinner";
 const APIkey = 'RX0RyDW9JYbHkUrMKp3REkF51-YsQbZbSagBgXZ4HgpZn2WMPBwXat-LzkxiRHZkCEKbue5Yd2qarbhpxm_Ib3DOpF9dIIaLwc5-I2YQs8V4de5ATm8YJbJaQwtsXnYx'
+
 
 function useSearch(query){
   const [repos, setRepos] = useState([]);
@@ -44,6 +46,7 @@ function useSearch(query){
         setRepos(responseBody || []);
         setIsLoading(false);
         setIsDone(true);
+        setIsError(false);
       }
     }
     if (query){
@@ -110,7 +113,15 @@ function Search() {
         <Row>
           <Col md={12}>
             {/* {isLoading ? <h1>Find boba near your city!</h1> : <h1></h1>} */}
-            {isDone ? <SearchResults data={data} /> : <h1></h1>}
+            {isDone ? <SearchResults data={data} error={isError}/> : <h1></h1>}
+            {isLoading ? <Spinner /> : <h1></h1>}
+            {/* {isError ? (
+              <Alert variant="warning">
+                Location not found. Please try again.
+              </Alert>
+            ) : (
+              <h1></h1>
+            )} */}
           </Col>
         </Row>
       </Container>

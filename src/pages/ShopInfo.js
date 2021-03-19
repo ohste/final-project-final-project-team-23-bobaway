@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Card, Col, Container, Row } from 'react-bootstrap';
+import { Carousel, Button, Card, Col, Container, Row } from 'react-bootstrap';
 import {useRouteMatch, useParams} from 'react-router-dom';
 import BeautyStars from 'beauty-stars';
 import {useSelector, useDispatch} from 'react-redux'
@@ -8,6 +8,9 @@ import {addRating} from '../redux/actions';
 import {getRatings} from '../redux/selectors';
 import Rating from '../components/Rating';
 import RateBox from '../components/RateBox';
+
+import Spinner from '../components/Spinner';
+
 import "./ShopInfo.css";
 
 const APIkey = 'RX0RyDW9JYbHkUrMKp3REkF51-YsQbZbSagBgXZ4HgpZn2WMPBwXat-LzkxiRHZkCEKbue5Yd2qarbhpxm_Ib3DOpF9dIIaLwc5-I2YQs8V4de5ATm8YJbJaQwtsXnYx'
@@ -117,7 +120,7 @@ function ShopInfo() {
       <Container>
         <Row className="text-center mb-3">
           <Col md={12}>
-            <h1>{data.name}</h1>
+            <h1><b>{data.name}</b></h1>
           </Col>
         </Row>
         <Row>
@@ -129,11 +132,49 @@ function ShopInfo() {
           <Col md={2}></Col>
           <Col md={8} className="mb-3">
             <Card>
-              <Card.Header>Shop Information</Card.Header>
+              {/* <Card.Header>Shop Information</Card.Header> */}
+              {/* <Card.Img
+                className="boba-shop-card-img"
+                variant="top"
+                src={data.image_url}
+                key={data.id}
+              /> */}
+              <Carousel>
+                {data.photos.map((item) => (
+                  <Carousel.Item>
+                    <img
+                      className="boba-shop-card-img d-block w-100"
+                      src={item}
+                      alt="First slide"
+                    />
+                  </Carousel.Item>
+                ))}
+              </Carousel>
+
               <Card.Body>
-                <Card.Text>{data.location.display_address[0]} </Card.Text>
-                <Card.Text>{data.location.display_address[1]}</Card.Text>
-                <Card.Text>Phone: {data.display_phone}</Card.Text>
+                {/* <Card.Text>{data.location.display_address[0]} </Card.Text>
+                <Card.Text>{data.location.display_address[1]}</Card.Text> */}
+                <Card.Text>
+                  <b>Address:</b>{" "}
+                  {data.location.display_address.map((text) => (
+                    <span> {text}</span>
+                  ))}
+                </Card.Text>
+                <Card.Text>
+                  <b>Phone:</b> {data.display_phone}
+                </Card.Text>
+                <Card.Text>
+                  <b>Offers:</b>{" "}
+                  {data.categories.map((item) => (
+                    <li>{item.title}</li>
+                  ))}
+                </Card.Text>
+                <Card.Text>
+                  <b>Transactions: </b>
+                  {data.transactions.map((text) => (
+                    <span>{text}</span>
+                  ))}
+                </Card.Text>
                 <Button onClick={handleAddRatingBtn}>Add Rating</Button>
               </Card.Body>
             </Card>
@@ -141,19 +182,25 @@ function ShopInfo() {
           <Col md={2}></Col>
         </Row>
 
-      <Row>
-        <Col md={2}></Col>
-        <Col md={8} className="mb-3">
-          {showRateBox && <RateBox
-                            submitHandle={handleSubmitRatingBtn}
-                            setName={setRaterName}
-                            setText={setRaterText}
-                            setStarValue={setRaterStarValue}
-                          />}
-        </Col>
-        <Col md={2}></Col>
-      </Row>
-      {ratings.map(rating => rating.id === shopId ? (<Rating {...rating}/>) : (<></>))}
+        <Row>
+          <Col md={2}></Col>
+          <Col md={8} className="mb-3">
+            {showRateBox && (
+              <RateBox
+                submitHandle={handleSubmitRatingBtn}
+                setName={setRaterName}
+                setText={setRaterText}
+                setStarValue={setRaterStarValue}
+              />
+            )}
+            <hr />
+          </Col>
+          <Col md={2}></Col>
+        </Row>
+
+        {ratings.map((rating) =>
+          rating.id === shopId ? <Rating {...rating} /> : <></>
+        )}
       </Container>
     );
   }
@@ -173,7 +220,7 @@ function ShopInfo() {
       <Container>
       <Row className="text-center mb-3">
         <Col md={12}>
-          <h1>Loading Data</h1>
+          <Spinner/>
         </Col>
       </Row>
       </Container>
