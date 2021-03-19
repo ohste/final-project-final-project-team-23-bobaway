@@ -107,7 +107,7 @@ function ShopInfo() {
           <Col md={2}></Col>
           <Col md={8} className="mb-3">
             <Card>
-              <Card.Header>Ratings</Card.Header>
+              <Card.Header>Reviews</Card.Header>
               <Card.Body>
                 <Card.Text>Address: </Card.Text>
                 <Card.Text>Hour: </Card.Text>

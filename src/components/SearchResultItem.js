@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card } from 'react-bootstrap';
 
+import './SearchResultItem.css';
 function SearchResultItem(props) {
   const {shopInfo} = props;
   return (
@@ -8,7 +9,7 @@ function SearchResultItem(props) {
       <Card className="mb-3" style={{ width: "19rem" }}>
         <Card.Img variant="top" src={shopInfo.image_url} key={shopInfo.id} />
         <Card.Body>
-          <Card.Title>Shop Name: {shopInfo.name}</Card.Title>
+          <Card.Title>{shopInfo.name}</Card.Title>
           <Card.Text>Phone Number: {shopInfo.display_phone}</Card.Text>
           <Card.Text>
             Address:{" "}
@@ -17,7 +18,7 @@ function SearchResultItem(props) {
             ))}
           </Card.Text>
           <Card.Text>
-            Closed: {shopInfo.is_closed ? "Closed" : "Open"}
+            Now: {shopInfo.is_closed ? "Closed" : "Open"}
           </Card.Text>
           <Card.Text>
             Transactions:{" "}
