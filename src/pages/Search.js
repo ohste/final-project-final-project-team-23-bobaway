@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import { Button, Container, Row, Col, InputGroup, Form, FormControl } from 'react-bootstrap';
+import {useLocation, useHistory} from 'react-router-dom';
+import queryString from 'query-string';
 import SearchResults from '../components/SearchResults';
 import fetch from 'isomorphic-unfetch';
 const APIkey = 'RX0RyDW9JYbHkUrMKp3REkF51-YsQbZbSagBgXZ4HgpZn2WMPBwXat-LzkxiRHZkCEKbue5Yd2qarbhpxm_Ib3DOpF9dIIaLwc5-I2YQs8V4de5ATm8YJbJaQwtsXnYx'
@@ -55,14 +57,21 @@ function useSearch(query){
   return [repos,isLoading,isError, isDone];
 }
 
+function useQueryString(){
+  return queryString.parse(useLocation().search);
+}
+
 function Search() {
   const [input, setInput] = useState("");
-  const [data, isLoading, isError, isDone] = useSearch('Corvallis');
+  const [data, isLoading, isError, isDone] = useSearch(useQueryString().q);
   const isQuerySafe = (!isLoading && !isError && isDone);
+  const history = useHistory();
   console.log("data is ==", data);
   console.log("isLoading ==", isLoading);
   console.log("isError ==", isError);
   console.log("isDone ==", isDone);
+
+
   return (
     <div>
       <Container>
@@ -77,7 +86,7 @@ function Search() {
             <Form
               onSubmit={(e) => {
                 e.preventDefault();
-                console.log(input);
+                history.push(`/search?q=${input}`);
               }}
             >
               <InputGroup className="mb-3">
@@ -99,7 +108,10 @@ function Search() {
           <Col md={2}></Col>
         </Row>
         <Row>
-          <Col md={12}>{isDone ? <SearchResults data={data}/> : <h1>Loading...</h1>}</Col>
+          <Col md={12}>
+            {/* {isLoading ? <h1>Find boba near your city!</h1> : <h1></h1>} */}
+            {isDone ? <SearchResults data={data} /> : <h1></h1>}
+          </Col>
         </Row>
       </Container>
     </div>
