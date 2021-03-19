@@ -1,7 +1,6 @@
 import React from 'react';
 import { Button, Card, Form } from 'react-bootstrap';
 
-import BeautyStars from 'beauty-stars';
 
 function RateBox(props) {
 
